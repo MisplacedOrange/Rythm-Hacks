@@ -16,7 +16,6 @@
   padding: 0 var(--space-2xl);
 }
 
-/* Hero Section */
 .hero-section {
   padding: 8rem 0 6rem;
   text-align: center;
@@ -62,7 +61,6 @@
   align-items: center;
 }
 
-/* Buttons - Simple and Clean */
 .btn-primary,
 .btn-secondary {
   padding: var(--space-md) var(--space-2xl);
@@ -98,7 +96,6 @@
   background-color: transparent;
 }
 
-/* Features Section */
 .features-section {
   padding: 6rem 0;
   animation: fadeIn 1s ease-in;

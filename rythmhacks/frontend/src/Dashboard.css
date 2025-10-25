@@ -1,0 +1,15 @@
+/* Dashboard layout */
+.dashboard-page { min-height: 100vh; background: var(--bg-primary); }
+.dashboard-container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-2xl); }
+
+.dash-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-3xl); padding: 3rem 0; }
+@media (min-width: 900px) { .dash-grid { grid-template-columns: 1fr 1fr; } }
+
+.dash-card { background: #111; border: 1px solid #222; border-radius: var(--radius-lg); padding: var(--space-2xl); }
+.dash-header { margin-bottom: var(--space-xl); }
+.dash-title { color: #fff; font-size: var(--text-2xl); font-weight: var(--font-bold); letter-spacing: -0.02em; }
+.dash-sub { color: #a0a0a0; font-size: var(--text-sm); }
+
+.dash-plot-wrapper { height: 360px; }
+
+.dash-error { color: #ef4444; margin-top: 1rem; }

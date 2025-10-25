@@ -1,0 +1,5 @@
+{
+  "title": "Triage",
+  "categories": ["Bug", "Feature", "Incident"],
+  "counts": [23, 11, 5]
+}

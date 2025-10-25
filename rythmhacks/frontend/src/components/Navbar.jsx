@@ -1,7 +1,7 @@
 ﻿import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Navbar.css'
-import logoIcon from '../assets/m.svg'
+import logoIcon from '../assets/images/MediLytica.png'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -19,8 +19,8 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="navbar-menu">
-            <Link to="/">Features</Link>
-            <a href="#dashboard">Dashboard</a>
+            <Link to="/">Home</Link>
+            <Link to="/dashboard">Dashboard</Link>
             <Link to="/contact">Contact</Link>
           </div>
           <div className="navbar-auth">
@@ -42,7 +42,7 @@ const Navbar = () => {
         <div className="mobile-menu">
           <div className="mobile-menu-content">
             <Link to="/" onClick={() => setIsMenuOpen(false)}>Product</Link>
-            <a href="#dashboard" onClick={() => setIsMenuOpen(false)}>Dashboard</a>
+            <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
             <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link>
           </div>
         </div>
