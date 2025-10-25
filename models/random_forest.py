@@ -95,7 +95,7 @@ def evaluate_model(model, X_test, y_test):
 
     try:
         viz = _import_visualize()
-        viz.plot_confusion_matrix(y_test, y_pred, out_file='rf_confusion_matrix.png')
+        viz.plot_confusion_matrix(y_test, y_pred, out_file='rf_confusion_matrix.png') 
         print('Saved confusion matrix: rf_confusion_matrix.png')
     except Exception as e:
         print(f'Could not save confusion matrix plot: {e}')

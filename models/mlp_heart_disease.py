@@ -9,53 +9,89 @@ import numpy as np
 import pandas as pd
 import sys
 from pathlib import Path
+from torchview import draw_graph
 
 
-def _import_visualize():
-    """Import the top-level visualize module even when running from inside models/.
-
-    This inserts the repository root into sys.path as a fallback so `import visualize`
-    works whether the current working directory is the repo root or the models/ folder.
-    """
-    try:
-        import visualize
-        return visualize
-    except ModuleNotFoundError:
-        repo_root = Path(__file__).resolve().parent.parent
-        repo_root_str = str(repo_root)
-        if repo_root_str not in sys.path:
-            sys.path.insert(0, repo_root_str)
-        # Try import again (let any other exceptions propagate)
-        import visualize
-        return visualize
+# Function to ensure the output directory exists
+def ensure_output_dir(dir_name='network_visualization'):
+    """Create the output directory if it doesn't exist."""
+    output_dir = Path(dir_name)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return output_dir
 
 # Define the MLP model for Heart Disease
 class HeartDiseaseMLP(nn.Module):
     def __init__(self, input_size=13):
+        """
+        Neural Network Architecture:
+        - Input Layer: 13 features (age, sex, cp, trestbps, etc.)
+        - Hidden Layer 1: 32 neurons with ReLU activation, BatchNorm, and Dropout(0.5)
+        - Hidden Layer 2: 16 neurons with ReLU activation, BatchNorm, and Dropout(0.5)
+        - Hidden Layer 3: 8 neurons with ReLU activation and Dropout(0.5)
+        - Output Layer: 2 neurons with LogSoftmax activation for binary classification
+        
+        The architecture gradually reduces dimensions (13 -> 32 -> 16 -> 8 -> 2)
+        while using regularization techniques (BatchNorm, Dropout) to prevent overfitting.
+        """
         super(HeartDiseaseMLP, self).__init__()
-        # Use a smaller network to reduce overfitting on tiny UCI dataset
+        # Layer 1: Input(13) -> Hidden(32)
         self.fc1 = nn.Linear(input_size, 32)
+        # Layer 2: Hidden(32) -> Hidden(16)
         self.fc2 = nn.Linear(32, 16)
+        # Layer 3: Hidden(16) -> Hidden(8)
         self.fc3 = nn.Linear(16, 8)
+        # Layer 4: Hidden(8) -> Output(2)
         self.fc4 = nn.Linear(8, 2)  # Binary classification: 0 (no disease) or 1 (disease)
 
-        # increase dropout and add batch norm sizes matching new layers
-        self.dropout = nn.Dropout(0.5)
-        self.batch_norm1 = nn.BatchNorm1d(32)
-        self.batch_norm2 = nn.BatchNorm1d(16)
+        # Regularization components
+        self.dropout = nn.Dropout(0.5)  # 50% dropout rate
+        self.batch_norm1 = nn.BatchNorm1d(32)  # Normalize outputs of first layer
+        self.batch_norm2 = nn.BatchNorm1d(16)  # Normalize outputs of second layer
         
     def forward(self, x):
-        x = F.relu(self.batch_norm1(self.fc1(x)))
-        x = self.dropout(x)
+        """
+        Forward pass of the network:
+        1. First hidden layer:
+           - Linear transformation (13 -> 32)
+           - Batch normalization
+           - ReLU activation
+           - Dropout (50%)
+           
+        2. Second hidden layer:
+           - Linear transformation (32 -> 16)
+           - Batch normalization
+           - ReLU activation
+           - Dropout (50%)
+           
+        3. Third hidden layer:
+           - Linear transformation (16 -> 8)
+           - ReLU activation
+           - Dropout (50%)
+           
+        4. Output layer:
+           - Linear transformation (8 -> 2)
+           - LogSoftmax activation
+        """
+        # Layer 1
+        x = self.fc1(x)         # Linear: 13 -> 32
+        x = self.batch_norm1(x) # Normalize
+        x = F.relu(x)          # ReLU activation
+        x = self.dropout(x)    # Dropout
 
-        x = F.relu(self.batch_norm2(self.fc2(x)))
-        x = self.dropout(x)
+        # Layer 2
+        x = self.fc2(x)         # Linear: 32 -> 16
+        x = self.batch_norm2(x) # Normalize
+        x = F.relu(x)          # ReLU activation
+        x = self.dropout(x)    # Dropout
 
-        x = F.relu(self.fc3(x))
-        x = self.dropout(x)
+        # Layer 3
+        x = self.fc3(x)        # Linear: 16 -> 8
+        x = F.relu(x)          # ReLU activation
+        x = self.dropout(x)    # Dropout
 
-        x = self.fc4(x)
-        return F.log_softmax(x, dim=1)
+        # Output Layer
+        x = self.fc4(x)        # Linear: 8 -> 2
+        return F.log_softmax(x, dim=1)  # LogSoftmax for binary classification
 
 # Load and preprocess data
 def load_heart_disease_data():
@@ -259,13 +295,104 @@ def main():
     print(f"\nBest Test Accuracy: {best_accuracy:.2f}%")
     print("Best model saved as heart_disease_mlp_best.pth")
 
-    # Create visualizations (saved as PNG files in the repo root)
+    # Create neural network visualization
     try:
-        viz = _import_visualize()
-        viz.plot_training_history(train_losses, train_accs, val_losses=test_losses, val_accs=test_accs, out_prefix='heart_disease_training')
-        print('Saved training plots: heart_disease_training_loss.png, heart_disease_training_acc.png')
+        print("\nStarting visualization process...")
+        
+        # Ensure Graphviz is in PATH
+        import os
+        graphviz_path = r"C:\Program Files\Graphviz\bin"
+        if graphviz_path not in os.environ['PATH']:
+            os.environ['PATH'] += os.pathsep + graphviz_path
+        
+        print(f"Using Graphviz from: {graphviz_path}")
+        
+        # Create visualization directory
+        output_dir = ensure_output_dir()
+        output_dir = Path(output_dir).resolve()
+        print(f"Output directory: {output_dir}")
+        
+        # Set up model visualization
+        batch_size = 1
+        input_shape = (batch_size, input_size)
+        
+        print("Drawing network graph...")
+        model_graph = draw_graph(
+            model, 
+            input_size=input_shape,
+            expand_nested=False,
+            hide_module_functions=True,
+            hide_inner_tensors=True,
+            depth=3,  # Increased depth for more detail
+            graph_dir=str(output_dir)
+        )
+        
+        # Configure output path
+        output_path = output_dir / "heart_disease_mlp_architecture"
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        print("\nChecking Graphviz setup...")
+        import subprocess
+        try:
+            dot_path = os.path.join(graphviz_path, "dot.exe")
+            result = subprocess.run([dot_path, '-V'], 
+                                 capture_output=True, 
+                                 text=True, 
+                                 check=True)
+            print(f"Graphviz version: {result.stdout}")
+        except subprocess.CalledProcessError as e:
+            print(f"Error running dot: {e}")
+            print(f"stdout: {e.stdout}")
+            print(f"stderr: {e.stderr}")
+            raise
+        
+        print("\nRendering visualization...")
+        
+        # Apply custom styling to make it horizontal and prettier
+        graph = model_graph.visual_graph
+        
+        # Set graph to horizontal layout (Left to Right)
+        graph.graph_attr.update({
+            'rankdir': 'LR',  # Left to Right layout
+            'splines': 'ortho',  # Orthogonal edges for cleaner look
+            'nodesep': '0.8',  # Horizontal spacing between nodes
+            'ranksep': '1.5',  # Vertical spacing between ranks
+            'bgcolor': '#f8f9fa',  # Light background
+            'dpi': '300',  # High resolution
+            'pad': '0.5',  # Padding around graph
+        })
+        
+        # Style nodes for better appearance
+        graph.node_attr.update({
+            'shape': 'box',
+            'style': 'rounded,filled',
+            'fillcolor': '#e3f2fd',  # Light blue fill
+            'color': '#1976d2',  # Blue border
+            'fontname': 'Arial',
+            'fontsize': '11',
+            'penwidth': '2',
+            'margin': '0.3,0.2',
+        })
+        
+        # Style edges
+        graph.edge_attr.update({
+            'color': '#424242',  # Dark gray
+            'penwidth': '1.5',
+            'arrowsize': '0.8',
+        })
+        
+        graph.engine = 'dot'
+        graph.render(
+            str(output_path),
+            format='png',
+            cleanup=True,
+        )
+        print(f'Neural network architecture visualization saved as: {output_path}.png')
+        print('Visualization is now horizontal (left-to-right) with improved styling!')
+        
     except Exception as e:
-        print(f'Could not create training plots: {e}')
+        print(f"Error creating visualization: {str(e)}")
+        print("Please ensure Graphviz is installed and in your system PATH")
 
 if __name__ == '__main__':
     main()

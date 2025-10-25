@@ -1,0 +1,15 @@
+digraph HeartDiseaseMLP {
+    rankdir=TB;
+    node [shape=box, style=filled, fillcolor=lightgrey];
+    
+    input [label="Input Layer\n(13 features)"];
+    h1 [label="Hidden Layer 1\n(32 neurons)\nReLU + BatchNorm + Dropout"];
+    h2 [label="Hidden Layer 2\n(16 neurons)\nReLU + BatchNorm + Dropout"];
+    h3 [label="Hidden Layer 3\n(8 neurons)\nReLU + Dropout"];
+    output [label="Output Layer\n(2 neurons)\nLogSoftmax"];
+    
+    input -> h1;
+    h1 -> h2;
+    h2 -> h3;
+    h3 -> output;
+}

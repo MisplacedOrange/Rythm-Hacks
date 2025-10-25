@@ -1,0 +1,22 @@
+// Heart Disease MLP Architecture
+digraph {
+	rankdir=TB
+	input [label="Input Layer
+(13 features)" shape=box]
+	h1 [label="Hidden Layer 1
+(32 neurons)
+ReLU + BatchNorm + Dropout" shape=box]
+	h2 [label="Hidden Layer 2
+(16 neurons)
+ReLU + BatchNorm + Dropout" shape=box]
+	h3 [label="Hidden Layer 3
+(8 neurons)
+ReLU + Dropout" shape=box]
+	output [label="Output Layer
+(2 neurons)
+LogSoftmax" shape=box]
+	input -> h1
+	h1 -> h2
+	h2 -> h3
+	h3 -> output
+}
