@@ -17,7 +17,6 @@
   height: 4rem;
 }
 
-/* Logo */
 .navbar-brand {
   display: flex;
   align-items: center;
@@ -59,7 +58,6 @@
   letter-spacing: -0.02em;
 }
 
-/* Desktop Menu */
 .navbar-menu {
   display: none;
   align-items: center;
@@ -79,7 +77,6 @@
   color: #000;
 }
 
-/* Desktop Auth */
 .navbar-auth {
   display: none;
   align-items: center;
@@ -102,7 +99,6 @@
   background-color: #333;
 }
 
-/* Mobile Menu Button */
 .mobile-menu-button {
   display: block;
   color: var(--text-secondary);
@@ -122,7 +118,6 @@
   height: 1.5rem;
 }
 
-/* Mobile Menu */
 .mobile-menu {
   display: block;
   background-color: white;
@@ -150,7 +145,6 @@
   color: #000;
 }
 
-/* Responsive */
 @media (min-width: 768px) {
   .navbar-menu {
     display: flex;
