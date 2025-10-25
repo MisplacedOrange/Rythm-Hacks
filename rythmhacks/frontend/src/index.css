@@ -3,26 +3,21 @@
 
 
 :root {
-  /* Background Colors */
   --bg-primary: #FFFFFF;
   --bg-secondary: #F5F5F5;
   --bg-elevated: #FFFFFF;
   
-  /* Text Colors */
   --text-primary: #351F65;
   --text-secondary: #1E1E1E;
   --text-tertiary: #707070;
   --text-inverse: #FFFFFF;
   
-  /* Accent Colors */
   --accent-primary: #351F65;
   --accent-hover: #351F65;
   
-  /* Border & Divider */
   --border-subtle: #E0E0E0;
   --border-medium: #D0D0D0;
   
-  /* Spacing Scale */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 0.75rem;
@@ -32,14 +27,12 @@
   --space-3xl: 3rem;
   --space-4xl: 4rem;
   
-  /* Border Radius - Rounded for Modern Feel */
   --radius-none: 0;
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-full: 50px;
   
-  /* Typography Scale */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-md: 1rem;
@@ -50,14 +43,12 @@
   --text-4xl: 2.5rem;
   --text-5xl: 3rem;
   
-  /* Font Weights */
   --font-normal: 400;
   --font-medium: 500;
   --font-semibold: 600;
   --font-bold: 700;
 }
 
-/* Global Reset */
 * {
   margin: 0;
   padding: 0;
@@ -74,7 +65,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography Utility Classes */
 .text-xs { font-size: var(--text-xs); }
 .text-sm { font-size: var(--text-sm); }
 .text-md { font-size: var(--text-md); }

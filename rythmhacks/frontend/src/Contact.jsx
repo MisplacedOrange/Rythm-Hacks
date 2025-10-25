@@ -23,7 +23,6 @@ const Contact = () => {
 
     const webhookUrl = 'https://discord.com/api/webhooks/1431703360142311524/OV7FAGvwaRm463VWKTDDDx92H7L2RIrIfObiJDvVv1jDVw3H0ImXN_ERBdZyD4Czcgpp'
 
-    // Create Discord embed message
     const discordMessage = {
       embeds: [{
         title: 'New Contact Form Submission',

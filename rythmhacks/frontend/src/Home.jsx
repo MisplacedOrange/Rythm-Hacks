@@ -70,7 +70,6 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Stats Section */}
         <section className="stats-section">
           <div className="stats-grid">
             <div className="stat-item">

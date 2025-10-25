@@ -1,4 +1,4 @@
-/* Card Component - Dark Theme with Image Support */
+
 .card {
   position: relative;
   padding: var(--space-2xl);
@@ -80,7 +80,6 @@
 }
 
 .card-expand {
-  /* Hide the expand (+) icon entirely */
   display: none;
 }
 

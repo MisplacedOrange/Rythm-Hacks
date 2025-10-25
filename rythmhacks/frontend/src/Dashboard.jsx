@@ -21,7 +21,6 @@ export default function Dashboard() {
     'Model Performance'
   ]
 
-  // Generate spiral data for visualization
   const spiralData = useMemo(() => {
     const theta = []
     const r = []

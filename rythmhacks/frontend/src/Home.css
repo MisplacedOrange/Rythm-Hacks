@@ -1,4 +1,3 @@
-/* Landing Page Styles - Teladoc Health Theme */
 
 * {
     margin-left: 10px;
@@ -133,7 +132,6 @@
   line-height: 1.6;
 }
 
-/* Collaboration Title */
 .collaboration-title {
   font-size: var(--text-3xl);
   font-weight: var(--font-bold);
@@ -151,7 +149,6 @@
   }
 }
 
-/* Stats Section */
 .stats-section {
   padding: 6rem 0;
   background-color: var(--bg-primary);
@@ -189,7 +186,6 @@
   letter-spacing: 0.05em;
 }
 
-/* Collaboration Image Section */
 .collaboration-section {
   padding: 2rem 0 4rem;
 }
@@ -243,7 +239,6 @@
   box-shadow: 0 12px 32px rgba(0,0,0,0.15);
 }
 
-/* CTA Section */
 .cta-section {
   padding: 6rem 0 8rem;
   text-align: left;;
@@ -268,7 +263,6 @@
   margin-right: auto;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .hero-section {
     padding: 5rem 0 4rem;
@@ -302,7 +296,6 @@
     font-size: var(--text-2xl);
   }
 
-  /* Stack text over image on small screens */
   .collaboration-grid {
     grid-template-columns: 1fr;
     gap: var(--space-xl);
