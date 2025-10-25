@@ -1,0 +1,5 @@
+# Our Mission
+
+Our mission with this project is to allow healthcare professionals and people other than AI researchers to understand data science and how our data collected helps with predicting medical conditions. Over the past few years, the leveraging of ML in many industries including healthcare has allowed for technological advancements and breakthroughs in research. However, one big issue with ML is that it is a very complicated field. Many people, including researchers from other fields like health science, do not have the time to be able to understand ML while also integrating their specialist fields.
+s
+Our project fixes this problem by transferring ML to a visualized and simple way that anybody can understand. From complex lines of code, we turn ML into a simple concept that can be understood visually. Our programs will allow for seamless integration with ML models and data as well as helping researchers from other fields to integrate ML without having to know the specific details behind ML.
