@@ -31,9 +31,7 @@ const Footer = () => {
             <div className="footer-col">
               <h4 className="footer-title">Resources</h4>
               <ul className="footer-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#security">Security</a></li>
-                <li><a href="#privacy">Privacy</a></li>
+                <li><a href="https://github.com/nix-life/Rythm-Hacks">GitHub</a></li>
               </ul>
             </div>
 
