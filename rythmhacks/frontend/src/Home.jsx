@@ -21,7 +21,6 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Features Section */}
         <section className="features-section">
           <div className="feature-grid">
             <Card 
@@ -62,15 +61,6 @@ const Home = () => {
               <div className="stat-label">Visualizations Created</div>
             </div>
           </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="cta-section">
-          <h2 className="cta-title">Ready to Transform Your Healthcare Data?</h2>
-          <p className="cta-description">
-            Join thousands of healthcare professionals visualizing data without writing a single line of code.
-          </p>
-          <button className="btn-primary">Start Free Trial</button>
         </section>
       </div>
     </div>
