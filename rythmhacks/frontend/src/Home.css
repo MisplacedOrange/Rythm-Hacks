@@ -18,7 +18,7 @@
 
 .hero-section {
   padding: 8rem 0 6rem;
-  text-align: center;
+  text-align: left;;
   animation: fadeIn 0.8s ease-in;
 }
 
@@ -144,7 +144,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--space-3xl);
-  text-align: center;
+  text-align: left;;
 }
 
 .stat-item {
@@ -174,7 +174,7 @@
 /* CTA Section */
 .cta-section {
   padding: 6rem 0 8rem;
-  text-align: center;
+  text-align: left;;
   background: linear-gradient(135deg, rgba(0, 181, 226, 0.05), rgba(53, 31, 101, 0.05));
   animation: fadeIn 1.4s ease-in;
 }
