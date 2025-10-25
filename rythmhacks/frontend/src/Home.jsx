@@ -1,7 +1,7 @@
 import React from 'react'
 import './Home.css'
 import Card from './components/Card'
-import decisionTreeImage from './assets/images/decisiontree.png'
+import collaborationImage from './assets/images/collaboration.jpg'
 
 const Home = () => {
   return (
@@ -14,7 +14,7 @@ const Home = () => {
           </h1>
           <p className="hero-description">
             Empower healthcare professionals with powerful data visualization tools. 
-            No coding required—just drag, drop, and analyze patient data in real-time.
+            No coding required, just drag, drop, and analyze patient data in real-time.
           </p>
           <div className="hero-actions">
             <button className="btn-primary">Get Started</button>
@@ -27,7 +27,6 @@ const Home = () => {
             <Card 
               title="Interactive Dashboards"
               description="Create stunning, interactive dashboards with patient metrics, treatment outcomes, and population health data—no coding required."
-              image={decisionTreeImage}
             />
             
             <Card 
@@ -40,6 +39,18 @@ const Home = () => {
               description="Generate comprehensive reports with drag-and-drop simplicity. Export publication-ready visualizations instantly."
             />
 
+          </div>
+        </section>
+
+        {/* Collaboration Image Section */}
+        <section className="collaboration-section">
+          <div className="collaboration-wrapper">
+            <img
+              className="collaboration-image"
+              src={collaborationImage}
+              alt="Healthcare teams collaborating with data visualizations"
+              loading="lazy"
+            />
           </div>
         </section>
 

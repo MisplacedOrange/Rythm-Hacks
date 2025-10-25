@@ -171,6 +171,24 @@
   letter-spacing: 0.05em;
 }
 
+/* Collaboration Image Section */
+.collaboration-section {
+  padding: 2rem 0 4rem;
+}
+
+.collaboration-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.collaboration-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+}
+
 /* CTA Section */
 .cta-section {
   padding: 6rem 0 8rem;

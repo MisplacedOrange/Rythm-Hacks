@@ -24,8 +24,8 @@ const Navbar = () => {
             <Link to="/contact">Contact</Link>
           </div>
           <div className="navbar-auth">
-            <button className="auth-login">Log in</button>
-            <button className="auth-signup">Sign up</button>
+            <Link className="auth-login" to="/login">Log in</Link>
+            <Link className="auth-signup" to="/signup">Sign up</Link>
           </div>
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="mobile-menu-button">
             <svg stroke="currentColor" fill="none" viewBox="0 0 24 24">
