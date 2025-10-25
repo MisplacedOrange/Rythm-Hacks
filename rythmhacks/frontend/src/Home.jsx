@@ -1,6 +1,7 @@
 import React from 'react'
 import './Home.css'
 import Card from './components/Card'
+import decisionTreeImage from './assets/images/decisiontree.png'
 
 const Home = () => {
   return (
@@ -26,6 +27,7 @@ const Home = () => {
             <Card 
               title="Interactive Dashboards"
               description="Create stunning, interactive dashboards with patient metrics, treatment outcomes, and population health data—no coding required."
+              image={decisionTreeImage}
             />
             
             <Card 
@@ -37,11 +39,7 @@ const Home = () => {
               title="Custom Reports"
               description="Generate comprehensive reports with drag-and-drop simplicity. Export publication-ready visualizations instantly."
             />
-            
-            <Card 
-              title="Secure & Compliant"
-              description="HIPAA-compliant infrastructure with enterprise-grade security. Your patient data stays protected and private."
-            />
+
           </div>
         </section>
 

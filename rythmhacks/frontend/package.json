@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "plotly.js-dist-min": "^3.1.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-plotly.js": "^2.6.0",
     "react-router-dom": "^7.9.4",
     "styled-components": "^6.1.19"
   },
