@@ -42,15 +42,31 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Collaboration Image Section */}
+        <h2 className="collaboration-title">COLLABORATE WITH PROFESSIONALS</h2>
         <section className="collaboration-section">
           <div className="collaboration-wrapper">
-            <img
-              className="collaboration-image"
-              src={collaborationImage}
-              alt="Healthcare teams collaborating with data visualizations"
-              loading="lazy"
-            />
+            <div className="collaboration-grid">
+              <div className="collaboration-text">
+                <h3 className="collaboration-subtitle">Work seamlessly with your team</h3>
+                <p className="collaboration-description">
+                  Bring clinicians, analysts, and administrators together around the same source of truth.
+                  Review patient outcomes, spot trends, and make data-driven decisions in real time using shared dashboards.
+                </p>
+                <ul className="collaboration-points">
+                  <li>Secure sharing of dashboards and insights</li>
+                  <li>Commentary and context alongside visuals</li>
+                  <li>Unified view of patient and operational metrics</li>
+                </ul>
+              </div>
+              <div className="collaboration-media">
+                <img
+                  className="collaboration-image"
+                  src={collaborationImage}
+                  alt="Healthcare team collaborating over a shared analytics dashboard"
+                  loading="lazy"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -62,8 +78,8 @@ const Home = () => {
               <div className="stat-label">Healthcare Professionals</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">0%</div>
-              <div className="stat-label">HIPAA Compliant</div>
+              <div className="stat-number">99%</div>
+              <div className="stat-label">Sucessful Build Rate</div>
             </div>
             <div className="stat-item">
               <div className="stat-number">2</div>
