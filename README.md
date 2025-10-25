@@ -1,6 +1,6 @@
 npm install react-plotly.js plotly.js
 
-# Vitalis
+# MediLytica
 
 ## Overview & Core Ideas
 
