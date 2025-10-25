@@ -1,4 +1,3 @@
-npm install react-plotly.js plotly.js
 
 # MediLytica
 
