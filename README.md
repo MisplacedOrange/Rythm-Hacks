@@ -1,6 +1,6 @@
 npm install react-plotly.js plotly.js
 
-# RythmHacks — Brainstorming Document
+# Vitalis
 
 ## Overview & Core Ideas
 
