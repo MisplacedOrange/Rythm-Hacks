@@ -50,15 +50,15 @@ const Home = () => {
         <section className="stats-section">
           <div className="stats-grid">
             <div className="stat-item">
-              <div className="stat-number">5,000+</div>
+              <div className="stat-number">0</div>
               <div className="stat-label">Healthcare Professionals</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">100%</div>
+              <div className="stat-number">0%</div>
               <div className="stat-label">HIPAA Compliant</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">10M+</div>
+              <div className="stat-number">2</div>
               <div className="stat-label">Visualizations Created</div>
             </div>
           </div>
