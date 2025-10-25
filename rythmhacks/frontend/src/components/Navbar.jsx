@@ -13,19 +13,18 @@ const Navbar = () => {
           <div className="navbar-brand">
             <Link to="/" className="navbar-logo">
               <div className="logo-icon">
-                <img src={logoIcon} alt="MediLytica Logo" />
+                <img src={logoIcon} alt="Medilytica Logo" />
               </div>
-              <span className="logo-text">MediLytica</span>
+              <span className="logo-text">Medilytica</span>
             </Link>
           </div>
           <div className="navbar-menu">
             <Link to="/">Home</Link>
-            <Link to="/dashboard">Dashboard</Link>
-            <Link to="/contact">Contact</Link>
+            <Link to="/dashboard">Features</Link>
+            <Link to="/contact">Contact Us</Link>
           </div>
           <div className="navbar-auth">
-            <Link className="auth-login" to="/login">Log in</Link>
-            <Link className="auth-signup" to="/signup">Sign up</Link>
+            <button className="auth-button">button</button>
           </div>
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="mobile-menu-button">
             <svg stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -41,9 +40,9 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="mobile-menu">
           <div className="mobile-menu-content">
-            <Link to="/" onClick={() => setIsMenuOpen(false)}>Product</Link>
-            <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
-            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+            <Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link>
+            <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>Features</Link>
+            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact Us</Link>
           </div>
         </div>
       )}
