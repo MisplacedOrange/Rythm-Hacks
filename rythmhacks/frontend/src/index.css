@@ -1,10 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* ============================================
-   CSS DESIGN SYSTEM - Minimalistic
-   ============================================ */
 
-/* Root Variables - Color Palette - Teladoc Health Theme */
+
 :root {
   /* Background Colors */
   --bg-primary: #FFFFFF;
