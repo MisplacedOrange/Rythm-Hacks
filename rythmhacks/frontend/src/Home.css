@@ -62,46 +62,45 @@
   align-items: center;
 }
 
-/* Buttons - Rounded with Smooth Transitions */
+/* Buttons - Simple and Clean */
 .btn-primary,
 .btn-secondary {
   padding: var(--space-md) var(--space-2xl);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   border-radius: var(--radius-full);
 }
 
 .btn-primary {
   background-color: var(--accent-primary);
   color: var(--text-inverse);
-  box-shadow: 0 4px 12px rgba(0, 181, 226, 0.2);
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 181, 226, 0.3);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(90deg, #00B5E2, #351F65);
-  box-shadow: 0 6px 16px rgba(0, 181, 226, 0.3);
-  transform: translateY(-2px);
+  background-color: #0099c7;
+  box-shadow: 0 4px 12px rgba(0, 181, 226, 0.4);
 }
 
 .btn-secondary {
   background-color: transparent;
   color: var(--text-secondary);
   border: 2px solid var(--border-medium);
+  box-shadow: none;
 }
 
 .btn-secondary:hover {
   color: var(--text-primary);
   border-color: var(--text-primary);
-  background-color: rgba(53, 31, 101, 0.05);
+  background-color: transparent;
 }
 
 /* Features Section */
 .features-section {
   padding: 6rem 0;
-  background-color: var(--bg-secondary);
   animation: fadeIn 1s ease-in;
 }
 
