@@ -1,0 +1,66 @@
+{
+  "id": "ds_b3b32bab-f929-441f-9a0d-49f9f90cd82e",
+  "filename": "heart_disease_test.csv",
+  "uploaded_at": "2025-10-26T11:31:56.308825",
+  "total_rows": 61,
+  "total_columns": 14,
+  "schema": [
+    {
+      "name": "age",
+      "type": "numeric"
+    },
+    {
+      "name": "sex",
+      "type": "numeric"
+    },
+    {
+      "name": "cp",
+      "type": "numeric"
+    },
+    {
+      "name": "trestbps",
+      "type": "numeric"
+    },
+    {
+      "name": "chol",
+      "type": "numeric"
+    },
+    {
+      "name": "fbs",
+      "type": "numeric"
+    },
+    {
+      "name": "restecg",
+      "type": "numeric"
+    },
+    {
+      "name": "thalach",
+      "type": "numeric"
+    },
+    {
+      "name": "exang",
+      "type": "numeric"
+    },
+    {
+      "name": "oldpeak",
+      "type": "numeric"
+    },
+    {
+      "name": "slope",
+      "type": "numeric"
+    },
+    {
+      "name": "ca",
+      "type": "numeric"
+    },
+    {
+      "name": "thal",
+      "type": "numeric"
+    },
+    {
+      "name": "target",
+      "type": "numeric"
+    }
+  ],
+  "file_path": "data\\datasets\\ds_b3b32bab-f929-441f-9a0d-49f9f90cd82e.csv"
+}

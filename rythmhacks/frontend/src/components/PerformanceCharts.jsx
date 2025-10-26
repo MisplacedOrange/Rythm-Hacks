@@ -256,18 +256,24 @@ function ConfusionMatrix({ matrix, labels }) {
   const layout = {
     title: {
       text: 'Confusion Matrix',
-      font: { size: 14 }
+      font: { size: 16 },
+      y: 0.92,
+      yanchor: 'top',
+      x: 0.5,
+      xanchor: 'center'
     },
     xaxis: {
       title: 'Predicted Label',
-      side: 'bottom'
+      side: 'bottom',
+      titlefont: { size: 13 }
     },
     yaxis: {
       title: 'True Label',
-      autorange: 'reversed'
+      autorange: 'reversed',
+      titlefont: { size: 13 }
     },
     annotations: annotations,
-    margin: { l: 80, r: 40, t: 50, b: 80 },
+    margin: { l: 90, r: 50, t: 100, b: 90 },
     autosize: true
   }
 
@@ -316,17 +322,23 @@ function FeatureImportance({ data }) {
   const layout = {
     title: {
       text: 'Feature Importance (Top 20)',
-      font: { size: 14 }
+      font: { size: 16 },
+      y: 0.92,
+      yanchor: 'top',
+      x: 0.5,
+      xanchor: 'center'
     },
     xaxis: { 
       title: 'Importance Score',
-      tickfont: { size: 11 }
+      tickfont: { size: 11 },
+      titlefont: { size: 13 }
     },
     yaxis: { 
       title: '',
-      tickfont: { size: 10 }
+      tickfont: { size: 10 },
+      automargin: true  // Auto-adjust margin based on label length
     },
-    margin: { l: 150, r: 40, t: 50, b: 70 },
+    margin: { l: 20, r: 50, t: 100, b: 80 },  // Reduced left margin, let automargin handle it
     autosize: true,
     showlegend: false
   }
@@ -373,27 +385,35 @@ function ROCCurve({ data }) {
   const layout = {
     title: {
       text: 'ROC Curve',
-      font: { size: 14 }
+      font: { size: 16 },
+      y: 0.92,
+      yanchor: 'top',
+      x: 0.5,
+      xanchor: 'center'
     },
     xaxis: {
       title: 'False Positive Rate',
       range: [0, 1],
-      tickfont: { size: 11 }
+      tickfont: { size: 11 },
+      titlefont: { size: 13 },
+      automargin: true
     },
     yaxis: {
       title: 'True Positive Rate',
       range: [0, 1],
-      tickfont: { size: 11 }
+      tickfont: { size: 11 },
+      titlefont: { size: 13 },
+      automargin: true
     },
     legend: {
       x: 0.5,
-      y: -0.2,
+      y: -0.25,
       xanchor: 'center',
       yanchor: 'top',
       orientation: 'h',
-      font: { size: 10 }
+      font: { size: 11 }
     },
-    margin: { l: 60, r: 40, t: 50, b: 100 },
+    margin: { l: 20, r: 20, t: 100, b: 120 },
     autosize: true
   }
 

@@ -110,12 +110,34 @@ if TORCH_AVAILABLE:
             return x
 
 
+    class SimplePyTorchMLP(nn.Module):
+        """
+        Simple PyTorch MLP without BatchNorm - robust for inference
+        Used by demo models to avoid dimension issues
+        """
+        def __init__(self, input_size=10, hidden_size=32, num_classes=2):
+            super(SimplePyTorchMLP, self).__init__()
+            self.model = nn.Sequential(
+                nn.Linear(input_size, hidden_size),
+                nn.ReLU(),
+                nn.Dropout(0.3),
+                nn.Linear(hidden_size, 16),
+                nn.ReLU(),
+                nn.Dropout(0.3),
+                nn.Linear(16, num_classes)
+            )
+        
+        def forward(self, x):
+            return self.model(x)
+
+
 # Registry of available custom models
 CUSTOM_MODELS = {
     'HeartDiseaseMLP': HeartDiseaseMLP if TORCH_AVAILABLE else None,
     'SimpleMLP': SimpleMLP if TORCH_AVAILABLE else None,
     'DeepMLP': DeepMLP if TORCH_AVAILABLE else None,
     'CNN1D': CNN1D if TORCH_AVAILABLE else None,
+    'SimplePyTorchMLP': SimplePyTorchMLP if TORCH_AVAILABLE else None,  # Demo model
 }
 
 

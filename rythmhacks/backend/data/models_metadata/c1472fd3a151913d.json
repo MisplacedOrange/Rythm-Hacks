@@ -1,0 +1,16 @@
+{
+  "model_id": "c1472fd3a151913d",
+  "filename": "heart_disease_mlp_best.pkl",
+  "framework": "sklearn",
+  "file_extension": ".pkl",
+  "upload_date": "2025-10-26T11:51:38.714075",
+  "file_size": 24476,
+  "file_size_mb": 0.02,
+  "model_path": "data\\models\\c1472fd3a151913d.pkl",
+  "model_info": {
+    "valid": true,
+    "type": "unknown",
+    "error": null,
+    "model_class": "dict"
+  }
+}

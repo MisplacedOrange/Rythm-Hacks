@@ -1,0 +1,62 @@
+{
+  "id": "ds_acedebd6-3d61-4309-910c-1f02ffde213b",
+  "filename": "health_test_data.csv",
+  "uploaded_at": "2025-10-26T12:14:51.800358",
+  "total_rows": 300,
+  "total_columns": 13,
+  "schema": [
+    {
+      "name": "age",
+      "type": "string"
+    },
+    {
+      "name": "blood_pressure",
+      "type": "string"
+    },
+    {
+      "name": "cholesterol",
+      "type": "string"
+    },
+    {
+      "name": "heart_rate",
+      "type": "string"
+    },
+    {
+      "name": "bmi",
+      "type": "string"
+    },
+    {
+      "name": "glucose_level",
+      "type": "string"
+    },
+    {
+      "name": "exercise_hours",
+      "type": "string"
+    },
+    {
+      "name": "sleep_hours",
+      "type": "string"
+    },
+    {
+      "name": "stress_level",
+      "type": "string"
+    },
+    {
+      "name": "alcohol_consumption",
+      "type": "string"
+    },
+    {
+      "name": "smoking_status",
+      "type": "string"
+    },
+    {
+      "name": "family_history",
+      "type": "string"
+    },
+    {
+      "name": "target",
+      "type": "categorical"
+    }
+  ],
+  "file_path": "data\\datasets\\ds_acedebd6-3d61-4309-910c-1f02ffde213b.csv"
+}

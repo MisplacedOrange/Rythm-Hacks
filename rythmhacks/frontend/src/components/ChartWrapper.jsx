@@ -8,6 +8,12 @@ export default function ChartWrapper({ data, layout = {}, config = {}, style }) 
     font: { family: getCssVar('--font-sans', 'Inter, sans-serif'), color: getCssVar('--text-secondary', '#333') },
     margin: { l: 60, r: 40, t: 50, b: 60 },
     autosize: true,
+    modebar: {
+      orientation: 'v',
+      bgcolor: 'transparent',
+      color: '#666',
+      activecolor: '#2D9CDB'
+    },
     colorway: [
       getCssVar('--series-blue', '#2D9CDB'),
       getCssVar('--series-green', '#27AE60'),
@@ -16,7 +22,12 @@ export default function ChartWrapper({ data, layout = {}, config = {}, style }) 
       getCssVar('--fit-red', '#E53935')
     ],
   }
-  const baseConfig = { displayModeBar: false, responsive: true }
+  const baseConfig = { 
+    displayModeBar: true, 
+    responsive: true,
+    modeBarButtonsToRemove: ['lasso2d', 'select2d'],
+    displaylogo: false
+  }
   return (
     <Plot 
       data={data} 

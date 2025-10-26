@@ -2,9 +2,20 @@
 import { Link } from 'react-router-dom'
 import './Navbar.css'
 import logoIcon from '../assets/images/MediLytica.png'
+import useRoom from '../hooks/useRoom'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { shareUrl } = useRoom('nav')
+
+  const copyShare = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl)
+      alert('Share link copied to clipboard')
+    } catch {
+      window.prompt('Copy this link', shareUrl)
+    }
+  }
 
   return (
     <nav className="navbar">
@@ -24,6 +35,7 @@ const Navbar = () => {
             <Link to="/contact">Contact Us</Link>
           </div>
           <div className="navbar-auth">
+            <button className="auth-button" onClick={copyShare} title="Copy session share link">Share</button>
             <a href="https://github.com/nix-life/rythm-hacks">
               <button className="auth-button">GitHub</button>
             </a>

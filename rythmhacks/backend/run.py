@@ -13,10 +13,10 @@ sys.path.insert(0, str(backend_dir))
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("🏥 MediLytica Backend Server")
+    print("MediLytica Backend Server")
     print("=" * 60)
     print()
-    print("📊 ML Visualization and Collaboration Platform")
+    print("ML Visualization and Collaboration Platform")
     print()
     print("Starting server...")
     print("- API Documentation: http://localhost:8000/docs")

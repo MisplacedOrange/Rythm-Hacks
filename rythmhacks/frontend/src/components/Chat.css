@@ -10,6 +10,9 @@
 }
 
 .chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #e0e0e0;
   background: #f8f8f8;
@@ -23,28 +26,28 @@
   color: #333;
 }
 
-.chat-toolbar {
-  display: flex;
-  gap: 0.25rem;
-  padding: 0.5rem;
-  border-bottom: 1px solid #e0e0e0;
-  background: white;
-  flex-wrap: wrap;
-}
-
-.toolbar-btn {
-  background: none;
+.share-room-btn {
+  padding: 0.5rem 1rem;
+  background: #5B9BD5;
+  color: white;
   border: none;
-  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.85rem;
-  color: #666;
-  border-radius: 3px;
-  transition: background 0.2s;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
-.toolbar-btn:hover {
+.share-room-btn:hover {
+  background: #4a8bc4;
+}
+
+.room-info {
+  padding: 0.5rem 1rem;
   background: #f0f0f0;
+  border-bottom: 1px solid #e0e0e0;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #666;
 }
 
 .chat-messages {

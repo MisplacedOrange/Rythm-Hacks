@@ -26,57 +26,100 @@ class ModelAnalyzer:
     @staticmethod
     def load_model(model_path: Path, framework: str) -> Any:
         """Load model from file based on framework"""
+        
+        # Register custom models for ALL frameworks (needed for joblib/pickle too)
+        if CUSTOM_MODELS_AVAILABLE:
+            import sys
+            import __main__
+            
+            # Register all custom models in __main__ namespace
+            for name, model_class in custom_models.CUSTOM_MODELS.items():
+                if model_class is not None:
+                    setattr(__main__, name, model_class)
+            
+            # Register in sys.modules['__mp_main__'] for multiprocessing/joblib
+            if '__mp_main__' not in sys.modules:
+                import types
+                mp_module = types.ModuleType('__mp_main__')
+                sys.modules['__mp_main__'] = mp_module
+            else:
+                mp_module = sys.modules['__mp_main__']
+            
+            # Add all custom model classes to __mp_main__
+            for name, model_class in custom_models.CUSTOM_MODELS.items():
+                if model_class is not None:
+                    setattr(mp_module, name, model_class)
+            
+            # Make classes available in current module too
+            for name, model_class in custom_models.CUSTOM_MODELS.items():
+                if model_class is not None:
+                    globals()[name] = model_class
+        
         if framework == 'sklearn':
             try:
-                return pickle.load(open(model_path, 'rb'))
+                model = pickle.load(open(model_path, 'rb'))
             except:
-                return joblib.load(model_path)
+                model = joblib.load(model_path)
+            
+            # Handle wrapped models (dict with 'model' key)
+            if isinstance(model, dict):
+                if 'model' in model:
+                    print(f"📦 Unwrapping model from dict (key: 'model')")
+                    return model['model']
+                elif 'state_dict' in model:
+                    raise Exception(
+                        "Model is a state_dict. Please save the full model object, "
+                        "not just state_dict. Use: joblib.dump(model, 'model.pkl')"
+                    )
+                else:
+                    raise Exception(
+                        f"Model is a dict but doesn't contain 'model' key. "
+                        f"Available keys: {list(model.keys())}"
+                    )
+            
+            return model
         
         elif framework == 'pytorch':
             try:
                 import torch
-                import sys
-                import __main__
                 
                 print(f"Loading PyTorch model from: {model_path}")
                 print(f"Custom models available: {CUSTOM_MODELS_AVAILABLE}")
                 
-                # Make custom models available during unpickling
-                if CUSTOM_MODELS_AVAILABLE:
-                    print("Registering custom model classes...")
-                    
-                    # Check if custom_models has TORCH_AVAILABLE
-                    if not hasattr(custom_models, 'TORCH_AVAILABLE') or not custom_models.TORCH_AVAILABLE:
-                        raise Exception(
-                            "PyTorch is not available in custom_models module. "
-                            "Make sure PyTorch is properly installed."
-                        )
-                    
-                    # Register all custom models in __main__ namespace
-                    for name, model_class in custom_models.CUSTOM_MODELS.items():
-                        if model_class is not None:
-                            setattr(__main__, name, model_class)
-                            print(f"  ✓ Registered: {name}")
-                        else:
-                            print(f"  ✗ Skipped (None): {name}")
-                    
-                    # Also register in sys.modules for multiprocessing
-                    sys.modules['__mp_main__'] = custom_models
-                    
-                    # Make classes available in current module too
-                    for name, model_class in custom_models.CUSTOM_MODELS.items():
-                        if model_class is not None:
-                            globals()[name] = model_class
-                else:
+                if not CUSTOM_MODELS_AVAILABLE:
                     print("⚠️  Custom models module not available")
                 
-                # Load the model with custom classes available
+                # Load the model (custom classes already registered above)
                 print("Calling torch.load...")
-                model = torch.load(
+                loaded = torch.load(
                     model_path, 
                     map_location='cpu',
                     weights_only=False  # Required for models with custom classes
                 )
+                
+                # Handle different PyTorch save formats
+                if isinstance(loaded, dict):
+                    if 'model' in loaded:
+                        print(f"📦 Unwrapping model from dict (key: 'model')")
+                        model = loaded['model']
+                    elif 'state_dict' in loaded:
+                        raise Exception(
+                            "Model is a state_dict. Please save the full model object, "
+                            "not just state_dict. Use: torch.save(model, 'model.pt')"
+                        )
+                    elif 'model_state_dict' in loaded:
+                        raise Exception(
+                            "Model contains model_state_dict. Please save the full model object, "
+                            "not just the state dict."
+                        )
+                    else:
+                        raise Exception(
+                            f"PyTorch model is a dict but doesn't contain 'model' key. "
+                            f"Available keys: {list(loaded.keys())}"
+                        )
+                else:
+                    model = loaded
+                
                 print(f"✓ Model loaded successfully: {type(model)}")
                 return model
                 
@@ -141,6 +184,54 @@ class ModelAnalyzer:
         """
         # Load model
         model = ModelAnalyzer.load_model(model_path, framework)
+        
+        print(f"\n🔍 Model loaded:")
+        print(f"   Type: {type(model)}")
+        print(f"   Has .model attr: {hasattr(model, 'model')}")
+        print(f"   Has .predict: {hasattr(model, 'predict')}")
+        print(f"   Has .forward: {hasattr(model, 'forward')}")
+        print(f"   Callable: {callable(model)}")
+        
+        # Auto-detect actual model type (handle PyTorch models saved with joblib)
+        try:
+            import torch
+            if isinstance(model, torch.nn.Module):
+                print(f"   ✓ Detected as PyTorch model (torch.nn.Module)")
+                framework = 'pytorch'
+                
+                # FIX: If model is missing 'model' attribute but HAS the sequential layers
+                # This happens when model was saved with old version of HeartDiseaseMLP
+                if not hasattr(model, 'model'):
+                    print(f"   ⚠️ PyTorch model missing .model attribute - attempting fix")
+                    # Check if this is a HeartDiseaseMLP that needs patching
+                    if type(model).__name__ == 'HeartDiseaseMLP':
+                        # Try to reconstruct self.model from existing layers
+                        # The old forward() might have used individual layers instead of self.model
+                        print(f"   Attempting to patch HeartDiseaseMLP...")
+                        # Instead of patching, let's just override the forward method to work directly
+                        original_forward = model.forward
+                        def patched_forward(x):
+                            # Try calling parent's forward if it exists
+                            # Otherwise use the layers directly
+                            if hasattr(model, '_modules') and len(model._modules) > 0:
+                                # Use Sequential on existing modules
+                                import torch.nn as nn
+                                sequential = nn.Sequential(*model._modules.values())
+                                return sequential(x)
+                            else:
+                                # Fallback to original forward (will probably fail)
+                                return original_forward(x)
+                        model.forward = lambda x: patched_forward(x)
+                        print(f"   ✓ Patched forward method to use _modules directly")
+                print(f"   Switching to PyTorch prediction method")
+            else:
+                print(f"   ✓ Not a PyTorch model")
+        except ImportError:
+            print(f"   ⚠️ PyTorch not available for detection")
+        except Exception as e:
+            print(f"   ⚠️ Error during PyTorch compatibility fix: {e}")
+        
+        print(f"   Final framework: {framework}\n")
         
         # Generate predictions
         if framework == 'sklearn':

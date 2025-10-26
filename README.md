@@ -1,11 +1,10 @@
 
-# MediLytica
+# MachinaLytics
 
 ## Overview & Core Ideas
 
 - Visualizer for Machine Learning algorithms — a better, more insightful version of Orange Data Mining.
-- Fix what Orange lacks:
-	- Low intuition: current tools often show numbers (accuracy, loss) but not *why* the model behaves that way.
+- Fixes what Orange Software lacks:
 	- Provide "algorithmic storytelling" visuals: reveal patterns, rhythms, and reasoning behind model behavior.
 	- Many visualizers are static; few offer live/streaming updates or interactive parameter control sliders.
 - Add real-time simulation of ML behavior as it trains or adapts (live visualization of learning dynamics).

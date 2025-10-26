@@ -224,7 +224,8 @@
 
 .visualization-grid {
   display: grid;
-  grid-template-columns: 1.3fr 0.7fr;
+  grid-template-columns: 1fr;
+  justify-items: center;
   gap: 1rem;
   margin-bottom: 2rem;
   min-height: 300px;
@@ -238,6 +239,8 @@
   display: flex;
   flex-direction: column;
   min-height: 300px;
+  max-width: 900px;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -475,4 +478,27 @@
   .bottom-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Code Editor Tab Styles */
+.code-view {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure consistent tab button styling */
+.main-tab-button {
+  transition: background 0.2s, color 0.2s;
+}
+
+.main-tab-button:hover {
+  background: #e0e0e0;
+}
+
+.main-tab-button.active {
+  background: #5B9BD5;
+  color: white;
 }

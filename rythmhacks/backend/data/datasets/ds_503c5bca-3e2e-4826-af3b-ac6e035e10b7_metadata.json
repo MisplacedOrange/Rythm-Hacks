@@ -1,0 +1,66 @@
+{
+  "id": "ds_503c5bca-3e2e-4826-af3b-ac6e035e10b7",
+  "filename": "heart_disease_test_data.csv",
+  "uploaded_at": "2025-10-26T10:42:31.644453",
+  "total_rows": 200,
+  "total_columns": 14,
+  "schema": [
+    {
+      "name": "feature_0",
+      "type": "string"
+    },
+    {
+      "name": "feature_1",
+      "type": "string"
+    },
+    {
+      "name": "feature_2",
+      "type": "string"
+    },
+    {
+      "name": "feature_3",
+      "type": "string"
+    },
+    {
+      "name": "feature_4",
+      "type": "string"
+    },
+    {
+      "name": "feature_5",
+      "type": "string"
+    },
+    {
+      "name": "feature_6",
+      "type": "string"
+    },
+    {
+      "name": "feature_7",
+      "type": "string"
+    },
+    {
+      "name": "feature_8",
+      "type": "string"
+    },
+    {
+      "name": "feature_9",
+      "type": "string"
+    },
+    {
+      "name": "feature_10",
+      "type": "string"
+    },
+    {
+      "name": "feature_11",
+      "type": "string"
+    },
+    {
+      "name": "feature_12",
+      "type": "string"
+    },
+    {
+      "name": "target",
+      "type": "categorical"
+    }
+  ],
+  "file_path": "data\\datasets\\ds_503c5bca-3e2e-4826-af3b-ac6e035e10b7.csv"
+}

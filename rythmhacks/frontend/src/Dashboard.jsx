@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import ChartWrapper from './components/ChartWrapper'
 import './Dashboard.css'
 import Chat from './components/Chat'
@@ -8,8 +8,13 @@ import RegressionPanel from './components/RegressionPanel'
 import DecisionTreePanel from './components/DecisionTreePanel'
 import ModelUpload from './components/ModelUpload'
 import PerformanceCharts from './components/PerformanceCharts'
+import UmapProjection from './components/UmapProjection'
+import CodeEditor from './components/CodeEditor'
+import useRoom from './hooks/useRoom'
+import useSharedState from './hooks/useSharedState'
 
 export default function Dashboard() {
+  const { publish, subscribe } = useRoom('dashboard')
   const [activeCategory, setActiveCategory] = useState('Neural Networks')
   const [activeTab, setActiveTab] = useState('dashboard')
   const [layers, setLayers] = useState([7, 7, 7, 7, 7, 7])
@@ -23,26 +28,6 @@ export default function Dashboard() {
     'Data Analysis'
   ]
 
-  const spiralData = useMemo(() => {
-    const theta = []
-    const r = []
-    const x = []
-    const y = []
-    const colors = []
-    
-    for (let i = 0; i < 200; i++) {
-      const t = (i / 200) * 4 * Math.PI
-      const radius = 1 + t / 4
-      theta.push(t)
-      r.push(radius)
-      x.push(radius * Math.cos(t))
-      y.push(radius * Math.sin(t))
-      colors.push(i < 100 ? '#F4A460' : '#4682B4')
-    }
-    
-    return { x, y, colors }
-  }, [])
-
   const updateLayer = (index, delta) => {
     setLayers(prev => {
       const newLayers = [...prev]
@@ -50,6 +35,11 @@ export default function Dashboard() {
       return newLayers
     })
   }
+
+  // Shared state across users (minimal demo sync)
+  useSharedState({ key: 'activeCategory', value: activeCategory, setValue: setActiveCategory, publish, subscribe })
+  useSharedState({ key: 'activeTab', value: activeTab, setValue: setActiveTab, publish, subscribe })
+  useSharedState({ key: 'layers', value: layers, setValue: setLayers, publish, subscribe })
 
   const handleModelUploadSuccess = (modelInfo) => {
     setUploadedModelId(modelInfo.model_id)
@@ -75,8 +65,8 @@ export default function Dashboard() {
               ))}
             </nav>
 
-            {/* Current Model Info in Sidebar */}
-            {uploadedModelInfo && (
+            {/* Current Model Info in Sidebar - Only for ML categories */}
+            {uploadedModelInfo && activeCategory !== 'Data Analysis' && (
               <div className="sidebar-section">
                 <h3 className="sidebar-subtitle">Current Model</h3>
                 <div className="uploaded-model-info">
@@ -108,26 +98,40 @@ export default function Dashboard() {
             >
               Chat
             </button>
+            <button
+              className={`main-tab-button ${activeTab === 'code' ? 'active' : ''}`}
+              onClick={() => setActiveTab('code')}
+            >
+              Code Editor
+            </button>
           </div>
 
           {/* Hyperparameter controls removed as obsolete */}
 
           {activeTab === 'dashboard' && (
             <>
-              {/* Model Upload Section - Top of Dashboard */}
-              <div className="upload-section">
-                <h3 className="section-title">Upload Trained Model</h3>
-                <ModelUpload onUploadSuccess={handleModelUploadSuccess} />
-              </div>
-
-              {activeCategory === 'Data Analysis' && (
-                <div style={{ display: 'grid', gap: '1rem', marginBottom: '1rem' }}>
-                  <Upload />
-                  <DataTable height={260} />
+              {/* Model Upload Section - Only for ML categories (not Data Analysis) */}
+              {activeCategory !== 'Data Analysis' && (
+                <div className="upload-section">
+                  <h3 className="section-title">Upload Trained Model</h3>
+                  <ModelUpload onUploadSuccess={handleModelUploadSuccess} />
                 </div>
               )}
 
-          {/* Neural Network and Output */}
+              {/* Data Analysis - CSV Upload & Table */}
+              {activeCategory === 'Data Analysis' && (
+                <>
+                  <div style={{ display: 'grid', gap: '1rem', marginBottom: '1rem' }}>
+                    <Upload />
+                    <DataTable height={260} />
+                  </div>
+                  
+                  {/* UMAP Projection */}
+                  <UmapProjection />
+                </>
+              )}
+
+          {/* Neural Network */}
           {activeCategory === 'Neural Networks' && (
             <div className="visualization-grid">
               <div className="viz-section">
@@ -168,25 +172,6 @@ export default function Dashboard() {
                 </div>
                 <div className="layers-label">Layers</div>
               </div>
-
-              <div className="viz-section">
-                <h3 className="viz-title">Output</h3>
-                <div className="output-plot">
-                  <ChartWrapper
-                    data={[{
-                      x: spiralData.x,
-                      y: spiralData.y,
-                      mode: 'markers',
-                      type: 'scatter',
-                      marker: { size: 8, color: spiralData.colors, line: { width: 1, color: '#fff' } },
-                      showlegend: false
-                    }]}
-                    layout={{ xaxis: { range: [-6, 6] }, yaxis: { range: [-6, 6] } }}
-                    style={{ width: '100%', height: '100%' }}
-                  />
-                </div>
-                <button className="generate-btn">Generate</button>
-              </div>
             </div>
           )}
 
@@ -203,28 +188,30 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* Model Performance Section */}
-          <div className="bottom-grid">
-            <div className="performance-section">
-              <h2 className="performance-title">&gt; Model Performance</h2>
-              <div className="performance-content">
-                {uploadedModelId ? (
-                  <PerformanceCharts 
-                    modelId={uploadedModelId} 
-                    modelType={uploadedModelInfo?.model_type || 'classifier'}
-                    activeCategory={activeCategory}
-                  />
-                ) : (
-                  <div className="performance-placeholder">
-                    <p>Upload a trained model to view performance metrics</p>
-                    <p className="placeholder-hint">
-                      Supported formats: .pkl, .joblib (scikit-learn), .h5 (Keras), .pt (PyTorch)
-                    </p>
-                  </div>
-                )}
+          {/* Model Performance Section - Only for ML categories (not Data Analysis) */}
+          {activeCategory !== 'Data Analysis' && (
+            <div className="bottom-grid">
+              <div className="performance-section">
+                <h2 className="performance-title">&gt; Model Performance</h2>
+                <div className="performance-content">
+                  {uploadedModelId ? (
+                    <PerformanceCharts 
+                      modelId={uploadedModelId} 
+                      modelType={uploadedModelInfo?.model_type || 'classifier'}
+                      activeCategory={activeCategory}
+                    />
+                  ) : (
+                    <div className="performance-placeholder">
+                      <p>Upload a trained model to view performance metrics</p>
+                      <p className="placeholder-hint">
+                        Supported formats: .pkl, .joblib (scikit-learn), .h5 (Keras), .pt (PyTorch)
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
             </>
           )}
 
@@ -232,6 +219,16 @@ export default function Dashboard() {
           {activeTab === 'chat' && (
             <div className="chat-view">
               <Chat />
+            </div>
+          )}
+
+          {/* Code Editor Tab */}
+          {activeTab === 'code' && (
+            <div className="code-view">
+              <CodeEditor 
+                modelId={uploadedModelId}
+                sessionId={publish?.roomId || 'default'}
+              />
             </div>
           )}
         </main>

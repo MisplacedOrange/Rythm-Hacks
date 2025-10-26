@@ -1,22 +1,72 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './Chat.css'
+import useRoom from '../hooks/useRoom'
+import { getClientId } from '../realtime/ablyClient'
 
 const Chat = () => {
-  const [messages, setMessages] = useState([
-    { id: 1, sender: 'James', text: 'What problems are there with our current model?' },
-    { id: 2, sender: 'Maria', text: "I looked at the model accuracy compared to the training. It seems like it's overfitting." },
-    { id: 3, sender: 'Me', text: 'What do you guys think about this data?' },
-    { id: 4, sender: 'James', text: 'I think its great!' },
-    { id: 5, sender: 'Me', text: 'I agree!' },
-    { id: 6, sender: 'James', text: 'We should definitely talk more about this.' },
-    { id: 7, sender: 'Me', text: 'Definitely!' },
-  ])
+  const { publish, subscribe, shareUrl, roomId } = useRoom('chat')
+  const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState('')
+  const selfId = getClientId()
+  const seenIds = useRef(new Set())
+  const responseIndex = useRef(0)
+
+  const copyShareUrl = () => {
+    navigator.clipboard.writeText(shareUrl)
+    alert('Share URL copied! Send this to collaborate.')
+  }
+
+  // ML-related auto-responses from collaborator (in order)
+  const mlResponses = [
+    "Great idea! Have you considered trying a random forest for better accuracy?",
+    "That makes sense. We should also check for overfitting with cross-validation.",
+    "Good point. Let's tune the hyperparameters using grid search.",
+    "I agree. Maybe we should normalize the features first before training.",
+    "Interesting! What about adding dropout layers to prevent overfitting?",
+    "True. We could also try ensemble methods to improve the predictions.",
+    "Makes sense. Let's visualize the confusion matrix to see where it's failing.",
+    "Nice! We should also check the learning curves to see if we need more data.",
+    "Exactly. Have you tried using SMOTE to handle the class imbalance?",
+    "Good thinking. We could increase the batch size to speed up training.",
+    "Right. Let's compare this with a gradient boosting model too.",
+    "Absolutely. We should track the loss function across epochs.",
+    "I see. Maybe we need to adjust the learning rate for better convergence.",
+    "That works. Let's also save checkpoints during training.",
+    "Perfect. We should test this on the validation set before deploying."
+  ]
+
+  const getNextResponse = () => {
+    const response = mlResponses[responseIndex.current]
+    responseIndex.current = (responseIndex.current + 1) % mlResponses.length
+    return response
+  }
+
+  useEffect(() => {
+    const handler = (data) => {
+      if (!data || !data.id || seenIds.current.has(data.id)) return
+      seenIds.current.add(data.id)
+      setMessages((prev) => [...prev, { id: data.id, sender: data.sender, text: data.text }])
+    }
+    subscribe('chat:message', handler)
+  }, [subscribe])
 
   const handleSend = () => {
     if (inputValue.trim()) {
-      setMessages([...messages, { id: messages.length + 1, sender: 'Me', text: inputValue }])
+      const msg = { id: `${Date.now()}_${Math.random().toString(36).slice(2,6)}`, sender: selfId, text: inputValue }
+      publish('chat:message', msg)
+      // Optimistic update for instant UX; de-duped by id on receive
+      setMessages((prev) => [...prev, msg])
       setInputValue('')
+
+      // Auto-respond from "collaborator" after 1-2 seconds
+      setTimeout(() => {
+        const responseMsg = {
+          id: `${Date.now()}_${Math.random().toString(36).slice(2,6)}`,
+          sender: 'Collaborator',
+          text: getNextResponse()
+        }
+        setMessages((prev) => [...prev, responseMsg])
+      }, 1000 + Math.random() * 1000) // Random delay between 1-2 seconds
     }
   }
 
@@ -31,33 +81,26 @@ const Chat = () => {
     <div className="chat-container">
       <div className="chat-header">
         <h3>Chat</h3>
+        <button 
+          className="share-room-btn" 
+          onClick={copyShareUrl}
+          title="Copy share URL to collaborate"
+        >
+          🔗 Share Room
+        </button>
       </div>
       
-      <div className="chat-toolbar">
-        <button className="toolbar-btn" title="Bold"><strong>B</strong></button>
-        <button className="toolbar-btn" title="Italic"><em>I</em></button>
-        <button className="toolbar-btn" title="Underline"><u>U</u></button>
-        <button className="toolbar-btn" title="Strikethrough"><s>A</s></button>
-        <button className="toolbar-btn" title="Link">🔗</button>
-        <button className="toolbar-btn" title="Code">{'{ }'}</button>
-        <button className="toolbar-btn" title="Image">📷</button>
-        <button className="toolbar-btn" title="List">☰</button>
-        <button className="toolbar-btn" title="Emoji">😊</button>
-        <button className="toolbar-btn" title="Bullet List">•</button>
-        <button className="toolbar-btn" title="Numbered List">1.</button>
-        <button className="toolbar-btn" title="Quote">"</button>
-        <button className="toolbar-btn" title="Outdent">«</button>
-        <button className="toolbar-btn" title="Indent">»</button>
-        <button className="toolbar-btn" title="Clear">×</button>
+      <div className="room-info">
+        <small>Room: {roomId} • Client: {selfId}</small>
       </div>
 
       <div className="chat-messages">
-        {messages.map((msg) => (
-          <div key={msg.id} className={`chat-message ${msg.sender === 'Me' ? 'me' : ''}`}>
-            <span className="message-sender">{msg.sender}:</span> {msg.text}
+            {messages.map((msg) => (
+              <div key={msg.id} className={`chat-message ${msg.sender === selfId ? 'me' : ''}`}>
+                <span className="message-sender">{msg.sender}:</span> {msg.text}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
       <div className="chat-input">
         <textarea

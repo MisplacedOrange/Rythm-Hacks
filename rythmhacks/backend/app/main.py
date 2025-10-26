@@ -11,7 +11,7 @@ from pathlib import Path
 import app.core  # noqa: F401
 
 # Import routers
-from app.api.routes import regression, decision_tree, datasets, models
+from app.api.routes import regression, decision_tree, datasets, models, code
 
 app = FastAPI(
     title="MediLytica API",
@@ -42,6 +42,7 @@ app.include_router(regression.router, tags=["Regression"])
 app.include_router(decision_tree.router, tags=["Decision Trees"])
 app.include_router(datasets.router, tags=["Datasets"])
 app.include_router(models.router, tags=["Models"])
+app.include_router(code.router, tags=["Code Execution"])
 
 # Ensure data directories exist
 @app.on_event("startup")

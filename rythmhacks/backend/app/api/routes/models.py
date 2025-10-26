@@ -205,6 +205,15 @@ async def calculate_metrics(model_id: str, request: MetricsRequest):
         X_test = np.array(request.X_test)
         y_test = np.array(request.y_test)
         
+        print(f"\n{'='*60}")
+        print(f"📊 Calculating metrics for model: {model_id}")
+        print(f"   Framework: {framework}")
+        print(f"   Model path: {model_path}")
+        print(f"   X_test shape: {X_test.shape}")
+        print(f"   y_test shape: {y_test.shape}")
+        print(f"   Model type: {request.model_type}")
+        print(f"{'='*60}\n")
+        
         # Analyze model
         metrics = ModelAnalyzer.analyze_model(
             model_path=model_path,
@@ -214,6 +223,8 @@ async def calculate_metrics(model_id: str, request: MetricsRequest):
             feature_names=request.feature_names,
             model_type=request.model_type
         )
+        
+        print(f"✅ Metrics calculated successfully\n")
         
         # Cache metrics in metadata
         metadata['cached_metrics'] = metrics
@@ -225,6 +236,14 @@ async def calculate_metrics(model_id: str, request: MetricsRequest):
         return metrics
     
     except Exception as e:
+        import traceback
+        error_details = traceback.format_exc()
+        print(f"\n{'='*60}")
+        print(f"❌ ERROR calculating metrics:")
+        print(f"{'='*60}")
+        print(error_details)
+        print(f"{'='*60}\n")
+        
         raise HTTPException(
             status_code=500,
             detail=f"Failed to calculate metrics: {str(e)}"

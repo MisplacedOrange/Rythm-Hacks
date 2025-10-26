@@ -4,12 +4,14 @@ Endpoint for uploading CSV files (required by Upload.jsx frontend component)
 """
 
 from fastapi import APIRouter, UploadFile, File, HTTPException
+from pydantic import BaseModel
 from pathlib import Path
 import csv
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from datetime import datetime
 
 from app.utils.helpers import generate_unique_id, validate_file_extension
+from app.core.umap_analyzer import compute_umap_projection, get_embedding_statistics
 
 router = APIRouter(prefix="/datasets")
 
@@ -207,3 +209,79 @@ async def get_dataset_info(dataset_id: str):
     
     except Exception as e:
         raise HTTPException(500, f"Failed to load dataset: {str(e)}")
+
+
+class UMAPRequest(BaseModel):
+    """Request model for UMAP computation"""
+    n_neighbors: Optional[int] = 15
+    min_dist: Optional[float] = 0.1
+    metric: Optional[str] = 'euclidean'
+
+
+@router.post("/{dataset_id}/umap")
+async def compute_dataset_umap(dataset_id: str, request: UMAPRequest):
+    """
+    Compute UMAP 2D projection for a dataset
+    
+    Applies UMAP dimensionality reduction to visualize high-dimensional data
+    in 2D space. Only numeric columns are used for the projection.
+    
+    Args:
+        dataset_id: Dataset identifier
+        request: UMAP parameters (n_neighbors, min_dist, metric)
+    
+    Returns:
+        embedding: Array of [x, y] coordinates for each data point
+        feature_names: List of numeric features used
+        n_samples: Number of data points
+        n_features: Number of features
+        parameters: UMAP parameters used
+        statistics: Embedding bounds and statistics
+    
+    Raises:
+        404: Dataset not found
+        400: Invalid parameters or no numeric data
+        500: Computation failed
+    """
+    # Find dataset file
+    metadata_path = Path(f"data/datasets/{dataset_id}_metadata.json")
+    
+    if not metadata_path.exists():
+        raise HTTPException(404, "Dataset not found")
+    
+    try:
+        import json
+        with open(metadata_path, 'r') as f:
+            metadata = json.load(f)
+        
+        file_path = Path(metadata['file_path'])
+        
+        if not file_path.exists():
+            raise HTTPException(404, "Dataset file not found")
+        
+        # Compute UMAP projection
+        result = compute_umap_projection(
+            csv_path=str(file_path),
+            n_neighbors=request.n_neighbors,
+            min_dist=request.min_dist,
+            metric=request.metric
+        )
+        
+        # Calculate embedding statistics
+        stats = get_embedding_statistics(result['embedding'])
+        
+        return {
+            'embedding': result['embedding'],
+            'feature_names': result['feature_names'],
+            'n_samples': result['n_samples'],
+            'n_features': result['n_features'],
+            'parameters': result['parameters'],
+            'statistics': stats
+        }
+    
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+    except ImportError as e:
+        raise HTTPException(500, str(e))
+    except Exception as e:
+        raise HTTPException(500, f"UMAP computation failed: {str(e)}")
