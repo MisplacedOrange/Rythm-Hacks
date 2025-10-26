@@ -18,7 +18,9 @@ const Home = () => {
             by ML engineers and researchers from other fields.
           </p>
           <div className="hero-actions">
-            <button className="btn-primary">Get Started</button>
+            <a href="/dashboard">
+              <button className="btn-primary" onclick="">Get Started</button>
+            </a>
             <button className="btn-secondary">Watch Demo</button>
           </div>
         </section>

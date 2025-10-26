@@ -6,6 +6,9 @@
 
 .hero-tile {
   text-align: center;
+  display: grid;
+  place-items: center;
+  font-size: medium;
 }
 
 .landing-page {
@@ -21,7 +24,7 @@
 
 .hero-section {
   padding: 8rem 0 6rem;
-  text-align: left;;
+  text-align: center;
   animation: fadeIn 0.8s ease-in;
 }
 
@@ -37,7 +40,7 @@
 }
 
 .hero-title {
-  font-size: var(--text-5xl);
+  font-size: var(--text-4xl);
   font-weight: var(--font-bold);
   color: var(--text-primary);
   line-height: 1.1;
@@ -50,7 +53,7 @@
 }
 
 .hero-description {
-  font-size: var(--text-lg);
+  font-size: var(--text-md);
   color: var(--text-secondary);
   line-height: 1.6;
   max-width: 600px;
@@ -78,14 +81,18 @@
   background-color: var(--accent-primary);
   color: var(--text-inverse);
   border: none;
-  box-shadow: 0 2px 8px rgba(0, 181, 226, 0.3);
+  box-shadow: 0 2px 8px rgba(40, 0, 63, 0.3);
 }
 
 .btn-primary:hover {
-  background-color: #0099c7;
-  box-shadow: 0 4px 12px rgba(0, 181, 226, 0.4);
+  background-color: #1a0053;
+  box-shadow: 0 4px 12px rgba(154, 0, 226, 0.4);
 }
 
+.hero-actions .btn-primary:hover {
+  background-color: #1a0053 !important;
+  box-shadow: 0 4px 12px rgba(154, 0, 226, 0.4) !important;
+}
 .btn-secondary {
   background-color: transparent;
   color: var(--text-secondary);

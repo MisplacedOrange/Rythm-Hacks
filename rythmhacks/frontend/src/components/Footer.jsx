@@ -11,11 +11,11 @@ const Footer = () => {
           <div className="footer-brand">
             <Link to="/" className="brand-link">
               <span className="brand-logo">
-                <img src={logoIcon} alt="MediLytica" />
+                <img src={logoIcon} alt="Machinalytics" />
               </span>
               <span className="brand-name">Machinalytics</span>
             </Link>
-            <p className="brand-tagline">No-code data visualization tools for busy healthcare professionals.</p>
+            <p className="brand-tagline">The best ML visualization solution for AI engineers.</p>
           </div>
 
           <div className="footer-columns">
@@ -38,15 +38,15 @@ const Footer = () => {
             <div className="footer-col">
               <h4 className="footer-title">Get in touch</h4>
               <ul className="footer-links">
-                <li><a href="mailto:support@medilytica.com">support@medilytica.com</a></li>
-                <li><a href="tel:+18006334328">1-437-499-4754</a></li>
+                <li><a href="mailto:charlieshao2010@gmail.com">charlieshao2010@gmail.com</a></li>
+                <li><a href="tel:+14374994754">1-437-499-4754</a></li>
               </ul>
             </div>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <p className="copyright">© {new Date().getFullYear()} MediLytica. All rights reserved.</p>
+          <p className="copyright">© {new Date().getFullYear()} Machinalytics. All rights reserved.</p>
           <div className="footer-legal">
             <a href="#privacy">Privacy</a>
             <a href="#terms">Terms</a>

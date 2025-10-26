@@ -228,6 +228,7 @@
   gap: 1rem;
   margin-bottom: 2rem;
   min-height: 300px;
+  flex-shrink: 0;
 }
 
 .viz-section {
@@ -238,7 +239,6 @@
   flex-direction: column;
   min-height: 300px;
   overflow: hidden;
-  margin-bottom: 0;
 }
 
 .viz-title {
@@ -253,8 +253,9 @@
   gap: 0.4rem;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem;
-  overflow: hidden;
+  padding: 0.5rem 0.5rem 0.5rem 0.75rem; /* add left padding to prevent left-side clipping */
+  /* let controls render outside node area if needed */
+  overflow: visible;
   flex: 1;
   position: relative;
 }
@@ -265,6 +266,7 @@
   gap: 0.25rem;
   align-items: center;
   position: relative;
+  min-width: 0;
 }
 
 .network-node {
@@ -342,6 +344,8 @@
   margin-bottom: 0.75rem;
   overflow: hidden;
 }
+
+/* remove forced stacking rule so panels remain side-by-side; small screens will scroll horizontally */
 
 .generate-btn {
   width: 100%;
@@ -428,8 +432,11 @@
 }
 
 @media (max-width: 1024px) {
+  /* keep two columns but allow horizontal scrolling on narrower screens */
   .visualization-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1.3fr 0.7fr;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
   
   .bottom-grid {
