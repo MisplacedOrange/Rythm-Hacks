@@ -1,0 +1,64 @@
+Rythm-Hacks — Current User Flow (ASCII)
+
+START
+  |
+  v
+Open app in browser
+  |
+  v
+See Navbar + Sidebar
+  |
+  v
+Select Algorithm in Sidebar
+  |
+  +-> Neural Networks (default)
+  |     |
+  |     v
+  |   Dashboard header
+  |     |
+  |     v
+  |   Top visuals (simplified NN boxes + spiral scatter)
+  |     |
+  |     v
+  |   Bottom grid: Model Performance (placeholder) + Chat
+  |     |
+  |     v
+  |   END (no deeper navigation)
+  |
+  +-> Decision Tree (planned)
+  |     |
+  |     v
+  |   (Spec only; not yet implemented)
+  |
+  +-> Regression (planned)
+  |     |
+  |     v
+  |   (Spec only; not yet implemented)
+  |
+  +-> Data Analysis (partial)
+  |     |
+  |     v
+  |   Static layout; dataset preview spec in docs only
+  |
+  +-> Model Performance (planned)
+        |
+        v
+      (Spec only; not yet implemented)
+
+Global actions
+  |
+  +-> Navbar links: Home | Features | Contact Us | button
+  |
+  +-> Mobile menu toggle (Navbar)
+
+State changes
+  |
+  |
+  +-> Chat messages (local-only; no backend)
+
+Data flow (current)
+  |
+  +-> No backend integration
+  +-> All plots use mock/generated data
+
+END
