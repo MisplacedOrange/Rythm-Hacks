@@ -10,11 +10,12 @@ const Home = () => {
 
         <section className="hero-section">
           <h1 className="hero-title">
-            Transform Healthcare Data Into Insights
+            Turn your data into actionable insights and easily visualized graphical data
           </h1>
           <p className="hero-description">
-            Empower healthcare professionals with powerful data visualization tools. 
-            No coding required, just drag, drop, and analyze patient data in real-time.
+            Empower your machine learning workflow with powerful data visualization tools. 
+            Gain insight collaboratively and analyze your data in a way that can be leveraged 
+            by ML engineers and researchers from other fields.
           </p>
           <div className="hero-actions">
             <button className="btn-primary">Get Started</button>
@@ -26,12 +27,12 @@ const Home = () => {
           <div className="feature-grid">
             <Card 
               title="Interactive Dashboards"
-              description="Create stunning, interactive dashboards with patient metrics, treatment outcomes, and population health data—no coding required."
+              description="Create stunning informative dashboards. Visualize complex datasets and make decisions."
             />
             
             <Card 
-              title="Real-Time Analytics"
-              description="Monitor vital statistics, track patient trends, and visualize clinical data in real-time with intuitive graphs and charts."
+              title="Collaborate with Others"
+              description="Using our chat feature and code editor, work together in real time and develop models at a rapid pace."
             />
             
             <Card 
@@ -49,7 +50,7 @@ const Home = () => {
               <div className="collaboration-text">
                 <h3 className="collaboration-subtitle">Work seamlessly with your team</h3>
                 <p className="collaboration-description">
-                  Bring clinicians, analysts, and administrators together around the same source of truth.
+                  Bring professionals from multiple different fields, analysts, and administrators together around the same source of truth.
                   Review patient outcomes, spot trends, and make data-driven decisions in real time using shared dashboards.
                 </p>
                 <ul className="collaboration-points">
@@ -74,7 +75,7 @@ const Home = () => {
           <div className="stats-grid">
             <div className="stat-item">
               <div className="stat-number">0</div>
-              <div className="stat-label">Healthcare Professionals</div>
+              <div className="stat-label">Professionals from different fields</div>
             </div>
             <div className="stat-item">
               <div className="stat-number">99%</div>

@@ -13,7 +13,7 @@ const Footer = () => {
               <span className="brand-logo">
                 <img src={logoIcon} alt="MediLytica" />
               </span>
-              <span className="brand-name">MediLytica</span>
+              <span className="brand-name">Machinalytics</span>
             </Link>
             <p className="brand-tagline">No-code data visualization tools for busy healthcare professionals.</p>
           </div>

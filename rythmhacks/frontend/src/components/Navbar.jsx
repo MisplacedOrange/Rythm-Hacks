@@ -15,7 +15,7 @@ const Navbar = () => {
               <div className="logo-icon">
                 <img src={logoIcon} alt="Medilytica Logo" />
               </div>
-              <span className="logo-text">Medilytica</span>
+              <span className="logo-text">Machinalytics</span>
             </Link>
           </div>
           <div className="navbar-menu">

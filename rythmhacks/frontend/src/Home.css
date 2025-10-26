@@ -4,8 +4,12 @@
     margin-right: 10px;
 }
 
+.hero-tile {
+  text-align: center;
+}
+
 .landing-page {
-  min-height: 100vh;
+  min-height: 1 00vh;
   background-color: var(--bg-primary);
 }
 

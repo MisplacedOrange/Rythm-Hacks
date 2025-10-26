@@ -1,0 +1,15 @@
+{
+  "model_id": "787a1c0e37bdf847",
+  "filename": "heart_disease_mlp_best.pkl",
+  "framework": "sklearn",
+  "file_extension": ".pkl",
+  "upload_date": "2025-10-26T05:31:54.471433",
+  "file_size": 24476,
+  "file_size_mb": 0.02,
+  "model_path": "data\\models\\787a1c0e37bdf847.pkl",
+  "model_info": {
+    "valid": false,
+    "type": "unknown",
+    "error": "Validation error: Can't get attribute 'HeartDiseaseMLP' on <module '__mp_main__' from 'C:\\\\Users\\\\roylu\\\\RythmHacks\\\\Rythm-Hacks\\\\rythmhacks\\\\backend\\\\run.py'>"
+  }
+}
