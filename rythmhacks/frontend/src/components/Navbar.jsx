@@ -20,11 +20,13 @@ const Navbar = () => {
           </div>
           <div className="navbar-menu">
             <Link to="/">Home</Link>
-            <Link to="/dashboard">Features</Link>
+            <Link to="/dashboard">Dashboard</Link>
             <Link to="/contact">Contact Us</Link>
           </div>
           <div className="navbar-auth">
-            <button className="auth-button">button</button>
+            <a href="https://github.com/nix-life/rythm-hacks">
+              <button className="auth-button">GitHub</button>
+            </a>
           </div>
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="mobile-menu-button">
             <svg stroke="currentColor" fill="none" viewBox="0 0 24 24">

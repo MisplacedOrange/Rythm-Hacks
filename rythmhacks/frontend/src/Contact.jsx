@@ -26,7 +26,7 @@ const Contact = () => {
     const discordMessage = {
       embeds: [{
         title: 'New Contact Form Submission',
-        color: 0x00B5E2, // Aqua color in hex
+        color: 0x00B5E2,
         fields: [
           {
             name: '👤 Name',
@@ -51,7 +51,7 @@ const Contact = () => {
         ],
         timestamp: new Date().toISOString(),
         footer: {
-          text: 'MediLytica Contact Form'
+          text: 'Machinalytics Contact Form'
         }
       }]
     }
@@ -87,7 +87,7 @@ const Contact = () => {
             Get In Touch
           </h1>
           <p className="contact-hero-description">
-            Have questions about MediLytica? We're here to help healthcare professionals 
+            Have questions about Machinalytics? We're here to help healthcare professionals 
             transform their data into actionable insights.
           </p>
         </section>
