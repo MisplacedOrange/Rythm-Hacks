@@ -132,6 +132,58 @@
   background-color: #333;
 }
 
+.upload-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 1rem;
+}
+
+.sidebar-section {
+  padding: 1rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.sidebar-subtitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 0.75rem;
+}
+
+.uploaded-model-info {
+  background: #f8f9fa;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.model-info-detail {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+}
+
+.model-info-meta {
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.model-info-meta:last-child {
+  margin-bottom: 0;
+}
+
 .hyperparameters {
   display: flex;
   gap: 1.5rem;
@@ -174,9 +226,8 @@
   display: grid;
   grid-template-columns: 1.3fr 0.7fr;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   min-height: 300px;
-  flex-shrink: 0;
 }
 
 .viz-section {
@@ -187,6 +238,7 @@
   flex-direction: column;
   min-height: 300px;
   overflow: hidden;
+  margin-bottom: 0;
 }
 
 .viz-title {
@@ -313,8 +365,8 @@
   grid-template-columns: 1fr;
   gap: 1rem;
   min-height: 650px;
-  margin-bottom: 1rem;
-  flex-shrink: 0;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .performance-section {
@@ -337,6 +389,35 @@
 .performance-content {
   flex: 1;
   overflow-y: auto;
+}
+
+.performance-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 400px;
+  color: #666;
+  text-align: center;
+  padding: 2rem;
+}
+
+.performance-placeholder p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.placeholder-hint {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.chat-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .chat-section {

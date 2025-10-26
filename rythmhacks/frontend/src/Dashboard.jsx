@@ -192,13 +192,13 @@ export default function Dashboard() {
 
           {/* Category-specific panels */}
           {activeCategory === 'Regression' && (
-            <div className="viz-section">
+            <div className="viz-section" style={{ marginBottom: '2rem' }}>
               <RegressionPanel />
             </div>
           )}
 
           {activeCategory === 'Decision Tree' && (
-            <div className="viz-section">
+            <div className="viz-section" style={{ marginBottom: '2rem' }}>
               <DecisionTreePanel />
             </div>
           )}
