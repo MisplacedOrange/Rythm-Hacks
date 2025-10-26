@@ -96,6 +96,42 @@
   font-size: 0.9rem;
 }
 
+.main-tab-navigation {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.25rem;
+  background: white;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.main-tab-button {
+  background-color: transparent;
+  color: #333;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.main-tab-button:hover {
+  color: #000;
+  background-color: #f5f5f5;
+}
+
+.main-tab-button.active {
+  background-color: #000;
+  color: white;
+}
+
+.main-tab-button.active:hover {
+  background-color: #333;
+}
+
 .hyperparameters {
   display: flex;
   gap: 1.5rem;
@@ -274,18 +310,18 @@
 
 .bottom-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
-  min-height: 320px;
+  min-height: 650px;
   margin-bottom: 1rem;
   flex-shrink: 0;
 }
 
 .performance-section {
   background: white;
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: 8px;
-  min-height: 320px;
+  min-height: 650px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
