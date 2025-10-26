@@ -8,6 +8,7 @@ from sklearn.preprocessing import StandardScaler
 import numpy as np
 import pandas as pd
 import sys
+import joblib
 from pathlib import Path
 from torchview import draw_graph
 
@@ -278,6 +279,8 @@ def main():
         if te_acc > best_accuracy + 1e-6:
             best_accuracy = te_acc
             epochs_no_improve = 0
+            
+            # Save using both torch.save and joblib
             torch.save({
                 'epoch': epoch,
                 'model_state_dict': model.state_dict(),
@@ -285,6 +288,19 @@ def main():
                 'accuracy': te_acc,
                 'scaler': scaler
             }, "heart_disease_mlp_best.pth")
+            
+            # Save using joblib for easier deployment
+            model_package = {
+                'model': model,
+                'model_state_dict': model.state_dict(),
+                'scaler': scaler,
+                'input_size': input_size,
+                'accuracy': te_acc,
+                'epoch': epoch,
+                'device': str(device)
+            }
+            joblib.dump(model_package, 'heart_disease_mlp_best.pkl')
+            
         else:
             epochs_no_improve += 1
 
@@ -293,7 +309,9 @@ def main():
             break
 
     print(f"\nBest Test Accuracy: {best_accuracy:.2f}%")
-    print("Best model saved as heart_disease_mlp_best.pth")
+    print("Best model saved as:")
+    print("  - heart_disease_mlp_best.pth (PyTorch format)")
+    print("  - heart_disease_mlp_best.pkl (Joblib format)")
 
     # Create neural network visualization
     try:
@@ -393,6 +411,35 @@ def main():
     except Exception as e:
         print(f"Error creating visualization: {str(e)}")
         print("Please ensure Graphviz is installed and in your system PATH")
+    
+    # Demonstrate how to load the model from joblib
+    print("\n" + "="*60)
+    print("LOADING MODEL EXAMPLE")
+    print("="*60)
+    print("\nTo load the model later, use:")
+    print("```python")
+    print("import joblib")
+    print("import torch")
+    print("")
+    print("# Load the model package")
+    print("model_package = joblib.load('heart_disease_mlp_best.pkl')")
+    print("")
+    print("# Extract components")
+    print("model = model_package['model']")
+    print("scaler = model_package['scaler']")
+    print("input_size = model_package['input_size']")
+    print("")
+    print("# Set to evaluation mode")
+    print("model.eval()")
+    print("")
+    print("# Make predictions")
+    print("# X_new = ... # your new data")
+    print("# X_scaled = scaler.transform(X_new)")
+    print("# X_tensor = torch.FloatTensor(X_scaled)")
+    print("# with torch.no_grad():")
+    print("#     predictions = model(X_tensor)")
+    print("#     predicted_classes = predictions.argmax(dim=1)")
+    print("```")
 
 if __name__ == '__main__':
     main()
